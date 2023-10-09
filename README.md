@@ -29,9 +29,9 @@ StepByStepBackend is a Kotlin-based backend application designed to manage and a
 ## Installation
 
 1. **Clone the Repository**:
-   \```bash
+   ```bash
    git clone https://github.com/Hampster8/StepByStepBackend.git
-   \```
+   ```
 
 2. **Navigate to the Directory**:
    \```bash
