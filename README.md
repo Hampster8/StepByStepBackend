@@ -34,22 +34,22 @@ StepByStepBackend is a Kotlin-based backend application designed to manage and a
    ```
 
 2. **Navigate to the Directory**:
-   \```bash
+   ```bash
    cd StepByStepBackend
-   \```
+   ```
 
 3. **Build the Application**:
-   \```bash
+   ```bash
    gradle build
-   \```
+   ```
 
 4. **Update Configuration**:
    - Ensure you update the `application.properties` file with your database credentials and other configurations.
 
 5. **Run the Application**:
-   \```bash
+   ```bash
    gradle bootRun
-   \```
+   ```
 
 ## Usage
 
@@ -62,9 +62,9 @@ Once the application is running, you can access the various endpoints provided b
 
 To run the tests included in the repository:
 
-\```bash
+```bash
 gradle test
-\```
+```
 
 ## Contributing
 
