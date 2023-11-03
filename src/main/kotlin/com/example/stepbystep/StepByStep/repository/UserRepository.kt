@@ -5,8 +5,13 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface UserRepository : JpaRepository<User, Long> {
-    fun findByUsername(username: String): User?
-    fun findByEmail(email: String): User?
-    fun findByProviderAndProviderId(provider: String, providerId: String): User?
+interface UserRepository : JpaRepository<User<Any?>, Long> {
+
+    // Custom query methods can be added here if needed
+
+    // Example: Find a user by email
+    fun findByEmail(email: String): User<Any?>?
+
+    // Example: Find a user by username
+    fun findByUsername(username: String): User<Any?>?
 }

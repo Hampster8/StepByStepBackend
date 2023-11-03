@@ -1,33 +1,65 @@
 package com.example.stepbystep.StepByStep.model
 
-import com.example.stepbystep.StepByStep.util.StrictEmail
 import jakarta.persistence.*
-import jakarta.validation.constraints.Email
-import jakarta.validation.constraints.NotBlank
-
-
+import java.security.AuthProvider
+import java.time.LocalDateTime
 
 @Entity
-@Table(name = "app_user") // 'user' is a reserved keyword in Postgres
+@Table(name = "app_user")
 data class User(
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
-    @Column(unique = true)
-    @get: jakarta.validation.constraints.Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters")
+    @Column(nullable = false, unique = true, length = 20)
     val username: String,
 
-    @get: StrictEmail(message = "Email is invalid")
-    @get: jakarta.validation.constraints.Size(max = 50, message = "Email must be less than 50 characters")
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     val email: String,
 
+    @Enumerated(EnumType.STRING)
+    val provider: AuthProvider,
 
-    val provider: String,
-
-    @Column(unique = true)
+    @Column(nullable = false)
     val providerId: String,
 
-    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    val stepRecords: Set<StepRecord> = HashSet()
-)
+    val refreshToken: String?,
+
+    val profilePicture: String?,
+
+    val isSharingData: Boolean = true,
+
+    val isActive: Boolean = true,
+
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val dailyStepCounts: Set<DailyStepCount> = HashSet(),
+
+    @ManyToMany
+    @JoinTable(
+        name = "user_leaderboards",
+        joinColumns = [JoinColumn(name = "user_id")],
+        inverseJoinColumns = [JoinColumn(name = "leaderboard_id")]
+    )
+    val customLeaderboards: Set<Leaderboard> = HashSet(),
+
+    // Additional fields and relationships can be added here
+
+    @Column(nullable = false)
+    val created: LocalDateTime = LocalDateTime.now(),
+
+    @Column(nullable = false)
+    val updated: LocalDateTime = LocalDateTime.now()
+) {
+    // If you need to perform any operations before persisting or updating the entity,
+    // you can use JPA lifecycle callbacks like @PrePersist and @PreUpdate
+
+    @PrePersist
+    fun onPrePersist() {
+        // Logic to be executed before persisting a new entity
+    }
+
+    @PreUpdate
+    fun onPreUpdate() {
+        // Logic to be executed before updating an existing entity
+    }
+}
