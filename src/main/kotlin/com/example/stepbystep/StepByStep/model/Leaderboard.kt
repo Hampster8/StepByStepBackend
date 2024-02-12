@@ -31,10 +31,10 @@ data class Leaderboard(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
-    val owner: User<Any?>, // The user who created the leaderboard
+    val owner: User, // The user who created the leaderboard
 
     @ManyToMany(mappedBy = "customLeaderboards")
-    val users: Set<User<Any?>> = HashSet(),
+    val users: Set<User> = HashSet(),
 
     @OneToMany(mappedBy = "leaderboard", fetch = FetchType.LAZY)
     val records: Set<DailyStepCount> = HashSet()

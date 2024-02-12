@@ -10,7 +10,7 @@ data class UserDTO(
     val profilePicture: String?
 )
 
-fun User<Any?>.toDTO(): UserDTO {
+fun User.toDTO(): UserDTO {
     return UserDTO(
         id = id,
         username = username,
@@ -19,7 +19,7 @@ fun User<Any?>.toDTO(): UserDTO {
     )
 }
 
-fun UserDTO.toEntity(sensitiveData: SensitiveUserData): User<Any?> {
+fun UserDTO.toEntity(sensitiveData: SensitiveUserData): User {
     return User(
         id = this.id ?: 0, // If id is null, use 0 or some other default value
         username = this.username,

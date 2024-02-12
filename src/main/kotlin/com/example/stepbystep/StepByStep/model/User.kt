@@ -12,20 +12,20 @@ data class User(
     val id: Long = 0,
 
     @Column(nullable = false, unique = true, length = 20)
-    val username: String,
+    var username: String,
 
     @Column(nullable = false, unique = true)
-    val email: String,
+    var email: String,
 
     @Enumerated(EnumType.STRING)
-    val provider: AuthProvider,
+    var provider: AuthProvider,
 
     @Column(nullable = false)
-    val providerId: String,
+    var providerId: String,
 
-    val refreshToken: String?,
+    var refreshToken: String?,
 
-    val profilePicture: String?,
+    var profilePicture: String?,
 
     val isSharingData: Boolean = true,
 
@@ -45,21 +45,23 @@ data class User(
     // Additional fields and relationships can be added here
 
     @Column(nullable = false)
-    val created: LocalDateTime = LocalDateTime.now(),
+    var created: LocalDateTime = LocalDateTime.now(),
 
     @Column(nullable = false)
-    val updated: LocalDateTime = LocalDateTime.now()
+    var updated: LocalDateTime = LocalDateTime.now()
 ) {
     // If you need to perform any operations before persisting or updating the entity,
     // you can use JPA lifecycle callbacks like @PrePersist and @PreUpdate
 
     @PrePersist
     fun onPrePersist() {
-        // Logic to be executed before persisting a new entity
+        created = LocalDateTime.now()
+        updated = LocalDateTime.now()
     }
 
     @PreUpdate
     fun onPreUpdate() {
-        // Logic to be executed before updating an existing entity
+        updated = LocalDateTime.now()
     }
+
 }
